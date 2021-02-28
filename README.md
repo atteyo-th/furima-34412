@@ -14,8 +14,9 @@
 | birth_day          | date   | null : false             | 
 
 ### association
-has_many   :items dependent: :destroy
-belongs_to :purchases 
+has_many :items dependent: :destroy
+has_many :purchases_history
+ 
 
 
 ## items テーブル'(出品商品)
@@ -44,9 +45,9 @@ has_one :purchases_history
 | prefecture    | string  | null : false                   | 
 | city          | string  | null : false                   |  
 | address       | string  | null : false                   | 
-| building_name | string  | null : false                   | 
+| building_name | string  |                                | 
 | phone_number  | string  | null : false                   | 
-| user-id       | integer | null : false  foreign_key: true| 
+| user_id       | integer | null : false  foreign_key: true| 
 
 ### association
 belongs_to :purchases_history
@@ -56,11 +57,13 @@ belongs_to :purchases_history
 
 | Column        | Type    | Options                        |
 | ------------- | --------| ----------------------------   |
-| user-id       | integer | null : false  foreign_key: true| 
-| item-id       | integer | null : false  foreign_key: true| 
+| user_id       | integer | null : false  foreign_key: true| 
+| item_id       | integer | null : false  foreign_key: true| 
 
 ### association
-has_many :purchase
+belongs_to :user
+belongs_to :item
+has_one :purchase
 
 
 
