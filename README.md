@@ -1,6 +1,6 @@
 # Furima-app テーブル設計
 
-## users テーブル
+## users テーブル(利用者)
 
 | Column             | Type   | Options                  |
 | ----------------   | ------ | ----------               |
@@ -13,32 +13,33 @@
 | first_name_kana    | string | null : false             | 
 | birth_day          | date   | null : false             | 
 
-### ssociation
+### association
 has_many   :items dependent: :destroy
-belongs_to :customer 
+belongs_to :purchases 
 
 
-## items テーブル
+## items テーブル'(出品商品)
 
 | Column         | Type    | Options                        |
 | ---------------| --------| -----------------------------  |
 | name           | string  | null : false                   | 
-| description    | string  | null : false                   | 
-| price          | string  | null : false                   |  
+| description    | text    | null : false                   | 
+| price          | integer | null : false                   |  
 | status_id      | integer | null : false                   | 
 | cost_id        | integer | null : false                   | 
 | area_id        | integer | null : false                   | 
 | delivery_id    | integer | null : false                   | 
+| category_id    | integer | null : false                   | 
 | user_id        | integer | null : false  foreign_key: true| 
 
 ### association
 belongs_to :user 
+has_one :purchases_history
 
-## purchases テーブル
+## purchases テーブル(購入者)
 
 | Column        | Type    | Options                        |
 | ------------- | --------| ----------------------------   |
-| name          | string  | null : false                   | 
 | post_code     | string  | null : false                   | 
 | prefecture    | string  | null : false                   | 
 | city          | string  | null : false                   |  
@@ -48,16 +49,19 @@ belongs_to :user
 | user-id       | integer | null : false  foreign_key: true| 
 
 ### association
-belongs_to :user
-has_one :purchases_history
+belongs_to :purchases_history
 
 
-## purchases_history テーブル
+## purchases_history テーブル(購入履歴)
 
 | Column        | Type    | Options                        |
 | ------------- | --------| ----------------------------   |
 | user-id       | integer | null : false  foreign_key: true| 
 | item-id       | integer | null : false  foreign_key: true| 
+
+### association
+has_many :purchase
+
 
 
 
