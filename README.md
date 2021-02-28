@@ -15,50 +15,50 @@
 
 ### association
 has_many :items 
-has_many :purchases_history
+has_many :purchase_histories
  
 
 
 ## items テーブル'(出品商品)
 
-| Column         | Type    | Options                        |
-| ---------------| --------| -----------------------------  |
-| name           | string  | null : false                   | 
-| description    | text    | null : false                   | 
-| price          | integer | null : false                   |  
-| status_id      | integer | null : false                   | 
-| cost_id        | integer | null : false                   | 
-| area_id        | integer | null : false                   | 
-| delivery_id    | integer | null : false                   | 
-| category_id    | integer | null : false                   | 
-| user_id        | integer | null : false  foreign_key: true| 
+| Column         | Type       | Options                        |
+| ---------------| -----------| -----------------------------  |
+| name           | string     | null : false                   | 
+| description    | text       | null : false                   | 
+| price          | integer    | null : false                   |  
+| status_id      | integer    | null : false                   | 
+| cost_id        | integer    | null : false                   | 
+| area_id        | integer    | null : false                   | 
+| delivery_id    | integer    | null : false                   | 
+| category_id    | integer    | null : false                   | 
+| user           | references | null : false  foreign_key: true| 
 
 ### association
 belongs_to :user 
-has_one :purchases_history
+has_one :purchase_history
 
 ## purchases テーブル(購入者)
 
-| Column              | Type    | Options                        |
-| ------------------- | --------| ----------------------------   |
-| post_code           | string  | null : false                   | 
-| area_id             | integer | null : false                   | 
-| city                | string  | null : false                   |    
-| address             | string  | null : false                   | 
-| building_name       | string  |                                | 
-| phone_number        | string  | null : false                   | 
-| purchase_history_id | integer | null : false  foreign_key: true| 
+| Column              | Type       | Options                        |
+| ------------------- | --------   | ----------------------------   |
+| post_code           | string     | null : false                   | 
+| area_id             | integer    | null : false                   | 
+| city                | string     | null : false                   |    
+| address             | string     | null : false                   | 
+| building_name       | string     |                                | 
+| phone_number        | string     | null : false                   | 
+| purchase_history    | references | null : false  foreign_key: true| 
 
 ### association
-belongs_to :purchases_history
+belongs_to :purchase_history
 
 
-## purchases_history テーブル(購入履歴)
+## purchase_histories テーブル(購入履歴)
 
-| Column        | Type    | Options                        |
-| ------------- | --------| ----------------------------   |
-| user_id       | integer | null : false  foreign_key: true| 
-| item_id       | integer | null : false  foreign_key: true| 
+| Column | Type       | Options                        |
+| -------| -----------| ----------------------------   |
+| user   | references | null : false  foreign_key: true| 
+| item   | references | null : false  foreign_key: true| 
 
 ### association
 belongs_to :user
