@@ -7,3 +7,9 @@ class ItemsController < ApplicationController
   def new
   end
 end
+
+private
+
+def message_params
+  params.require(:item).permit(:name, :description, :price, :status_id, :cost_id, :delivery_id, :category_id, :user ).merge(user_id: current_user.id)
+end
