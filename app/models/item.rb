@@ -11,6 +11,7 @@ class Item < ApplicationRecord
   belongs_to :delivery
   
     #空の投稿を保存できないようにする
+  validates :image,      presence: true  
   validates :category,   presence: true
   validates :status,     presence: true
   validates :cost,       presence: true
