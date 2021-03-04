@@ -4,11 +4,11 @@ FactoryBot.define do
 
     name                  { '商品名' }
     description           { '商品説明' }
-    status_id             { '2' }
-    cost_id               { '2' }
-    area_id               { '2' }
-    delivery_id           { '2' }
-    category_id           { '2' }
+    status_id             { 2 }
+    cost_id               { 2 }
+    area_id               { 2 }
+    delivery_id           { 2 }
+    category_id           { 2 }
     price                 { 300 }
 
     after(:build) do |message|
