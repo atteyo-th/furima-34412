@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :move_to_index, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update]
+  before_action :move_to_index, except: [:index, :show]
+
 
   def index
     @items = Item.order('created_at DESC')
@@ -21,16 +22,15 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
-    # unless@item.user_id == current_user.id
+    # @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to action: :show
     else
@@ -48,7 +48,6 @@ class ItemsController < ApplicationController
 
   # 投稿者以外のユーザーが、編集等で、投稿者専用のページに遷移できないようにする
   def move_to_index
-    @item = Item.find(params[:id])
     if current_user.id != @item.user.id
        redirect_to action: :index
     end
