@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :move_to_index, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.order('created_at DESC')
@@ -47,6 +48,14 @@ class ItemsController < ApplicationController
 
   # 投稿者以外のユーザーが、編集等で、投稿者専用のページに遷移できないようにする
   def move_to_index
-    redirect_to action: :index unless user_signed_in?
+    @item = Item.find(params[:id])
+    if current_user.id != @item.user.id
+       redirect_to action: :index
+    end
+  end  
+
+  def set_item  
+    @tweet = Item.find(params[:id]) 
   end
+
 end
