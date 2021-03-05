@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update]
-  before_action :move_to_index, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update,]
+  before_action :move_to_index, except: [:index, :show, :new]
 
 
   def index
@@ -22,15 +22,15 @@ class ItemsController < ApplicationController
   end
 
   def show
-    # @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])　　(理解したら削除)
   end
 
   def edit
-    # @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])　　(理解したら削除)
   end
 
   def update
-    # @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])   (理解したら削除)
     if @item.update(item_params)
       redirect_to action: :show
     else
@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   end  
 
   def set_item  
-    @tweet = Item.find(params[:id]) 
+    @item = Item.find(params[:id]) 
   end
 
 end
