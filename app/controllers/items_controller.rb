@@ -1,8 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update,]
-  before_action :move_to_index, except: [:index, :show, :new]
-
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :move_to_index, except: [:index, :show, :new, :create]
 
   def index
     @items = Item.order('created_at DESC')
@@ -38,6 +37,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    redirect_to root_path
+  end
+
   private
 
   # ストロングパラメーター(updateアクションにて params を指定)
@@ -46,15 +51,13 @@ class ItemsController < ApplicationController
                                  :user).merge(user_id: current_user.id)
   end
 
-  # 投稿者以外のユーザーが、編集等で、投稿者専用のページに遷移できないようにする
-  def move_to_index
-    if current_user.id != @item.user.id
-       redirect_to action: :index
-    end
-  end  
-
-  def set_item  
-    @item = Item.find(params[:id]) 
+  # show,edit,update のインスタンス変数が同じなので一つにまとめている
+  def set_item
+    @item = Item.find(params[:id])
   end
 
+  # 投稿者以外のユーザーが、編集等で、投稿者専用のページに遷移できないようにする
+  def move_to_index
+    redirect_to action: :index if current_user.id != @item.user.id
+  end
 end
