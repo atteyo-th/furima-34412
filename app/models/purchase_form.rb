@@ -1,6 +1,6 @@
 class PurchaseForm
   include ActiveModel::Model
-  attr_accessor :post_code, :area_id, :city, :address, :building_name, :phone_number, :purchase_history, :user_id, :item_id
+  attr_accessor :post_code, :area_id, :city, :address, :building_name, :phone_number, :purchase_history, :user_id, :item_id, :token
 
 
   with_options presence: true do
@@ -9,6 +9,7 @@ class PurchaseForm
     validates :address
     validates :phone_number, format: {with: /\A\d{11}\z/}
     validates :area_id
+    validates :token
 
   end
   # ジャンルの選択が「--」の時は保存できないようにする
