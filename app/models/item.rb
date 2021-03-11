@@ -19,7 +19,7 @@ class Item < ApplicationRecord
     # validates :cost
     # validates :area
     # validates :delivery
-
+    
     #  全角数字では保存できない / (逆に、全て半角数値を指定)
     validates :price,        format: { with: /\A[0-9]+\z/ }
   end
