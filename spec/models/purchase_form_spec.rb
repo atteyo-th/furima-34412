@@ -3,15 +3,22 @@ require 'rails_helper'
 RSpec.describe PurchaseForm, type: :model do
   describe '#create' do
     before do
-      @purchase_form = FactoryBot.build(:purchase_form)
-      @user = FactoryBot.build(:user)
-      @item = FactoryBot.build(:item)
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:item)
+      @purchase_form = FactoryBot.build(:purchase_form, user_id: @user.id, item_id: @item.id )
+      sleep(1)
     end
 
     context '商品購入登録できるとき' do
       it 'post_code,area_id,city,address,builing_name,phone_number,が存在すれば登録できる' do
         expect(@purchase_form).to be_valid
       end
+
+      it '建物番号は空でも登録できること' do
+        @purchase_form.building_name  = nil
+        expect(@purchase_form).to be_valid
+      end
+
     end
 
     context '商品購入登録できないとき' do
@@ -56,6 +63,32 @@ RSpec.describe PurchaseForm, type: :model do
         @purchase_form.valid?
         expect(@purchase_form.errors.full_messages).to include("Token can't be blank")
       end
+
+      it '英数混合では登録できないこと' do
+        @purchase_form.phone_number = 'a1a1a1a1a1a'
+        @purchase_form.valid?
+        expect(@purchase_form.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'ハイフン無しでは登録できないこと' do
+        @purchase_form.post_code = '2222222'
+        @purchase_form.valid?
+        expect(@purchase_form.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
+      end
+
+      it 'user_idが空では購入できないこと' do
+        @purchase_form.user_id = ''
+        @purchase_form.valid?
+        expect(@purchase_form.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空では購入できないこと' do
+        @purchase_form.item_id = ''
+        @purchase_form.valid?
+        expect(@purchase_form.errors.full_messages).to include("Item can't be blank")
+      end
+
     end
   end
 end
+
