@@ -1,16 +1,17 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
   before_action :move_to_index, except: [:index, :create]
-  before_action :sold_out_item, only: [:index]
+  before_action :sold_out_item, only: [:index, :create]
 
   def index
     @purchase_form = PurchaseForm.new
-    @item = Item.find(params[:item_id])
+    #  @item = Item.find(params[:item_id])　　　(理解したら削除)
     redirect_to root_path if current_user == @item.user
   end
 
   def create
-    @item = Item.find(params[:item_id])
+    #  @item = Item.find(params[:item_id])  　　(理解したら削除)
     @purchase_form = PurchaseForm.new(purchase_params)
     if @purchase_form.valid?
       pay_item
@@ -23,10 +24,15 @@ class OrdersController < ApplicationController
 
   private
 
+
   def purchase_params
     params.require(:purchase_form).permit(:post_code, :area_id, :city, :address, :building_name, :phone_number).merge(
       user_id: current_user.id, item_id: @item.id, token: params[:token]
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
   def pay_item
@@ -44,7 +50,7 @@ class OrdersController < ApplicationController
   end
 
   def sold_out_item
-    @item = Item.find(params[:item_id])
+    #  @item = Item.find(params[:item_id])  　(理解したら削除) 
     redirect_to root_path if @item.purchase_history.present?
   end
 end

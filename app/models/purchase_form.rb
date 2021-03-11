@@ -9,7 +9,10 @@ class PurchaseForm
     validates :address
     validates :phone_number, format: { with: /\A\d{11}\z/ }
     validates :area_id
+    validates :item_id
+    validates :user_id
     validates :token
+
   end
   # ジャンルの選択が「--」の時は保存できないようにする
   validates :area_id, numericality: { other_than: 1 }
