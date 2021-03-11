@@ -46,17 +46,16 @@ RSpec.describe PurchaseForm, type: :model do
       end
 
       it '電話番号が11桁必須であること' do
-        @purchase_form.phone_number = 123456789
+        @purchase_form.phone_number = 123_456_789
         @purchase_form.valid?
-        expect(@purchase_form.errors.full_messages).to include("Phone number is invalid")
+        expect(@purchase_form.errors.full_messages).to include('Phone number is invalid')
       end
 
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @purchase_form.token = ''
         @purchase_form.valid?
         expect(@purchase_form.errors.full_messages).to include("Token can't be blank")
       end
-      
     end
   end
 end

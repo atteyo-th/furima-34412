@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :purchase_form do
-
     post_code         { '111-1111' }
     area_id           { 2 }
     city              { '市区町村' }
@@ -9,8 +8,6 @@ FactoryBot.define do
     phone_number      { '09012345678' }
     user_id         { '2' }
     item_id         { '2' }
-    token           {"tok_abcdefghijk00000000000000000"}
-    
+    token           { 'tok_abcdefghijk00000000000000000' }
   end
 end
-
