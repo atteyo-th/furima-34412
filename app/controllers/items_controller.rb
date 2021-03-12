@@ -58,6 +58,6 @@ class ItemsController < ApplicationController
 
   # 投稿者以外のユーザーが、編集等で、投稿者専用のページに遷移できないようにする
   def move_to_index
-    redirect_to action: :index if current_user.id != @item.user.id
+    redirect_to action: :index if current_user.id != @item.user.id || @item.purchase_history.present?
   end
 end
